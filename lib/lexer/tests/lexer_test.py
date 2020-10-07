@@ -1,5 +1,5 @@
-from lib.lexer import tokenize
-from lib.token import Token
+from lib.lexer.lexer import tokenize
+from lib.lexer.token_class import Token
 
 def test_tokenize():
   r = tokenize("a")

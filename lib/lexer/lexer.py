@@ -1,5 +1,5 @@
 import re
-from .token import Token
+from .token_class import Token
 
 class TokenizationResult:
   def __init__(self):

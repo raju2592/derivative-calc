@@ -22,10 +22,12 @@ class SecExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [sec_rule],
         None
       )
     
     return utils.apply_chain_rule(self, sec_rule, derivative)
   
+  def simplify(self):
+    return SecExpression(self.arg.simplify())

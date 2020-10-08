@@ -69,7 +69,6 @@ def tokenize(str):
     if match_len == 0:
       result.set_failure()
       return result
-    print(match_len, token_name)
     lexeme = str[pos:pos + match_len]
     pos = pos + match_len
     result.add_token(Token(token_name, lexeme))

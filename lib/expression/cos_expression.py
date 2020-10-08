@@ -19,9 +19,12 @@ class CosExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [cos_rule],
         None
       )
     
     return utils.apply_chain_rule(self, cos_rule, derivative)
+
+  def simplify(self):
+    return CosExpression(self.arg.simplify())

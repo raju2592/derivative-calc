@@ -12,4 +12,4 @@ class Expression:
     pass
 
   def simplify(self):
-    pass
+    return self;

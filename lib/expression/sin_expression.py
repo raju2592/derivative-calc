@@ -20,10 +20,12 @@ class SinExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [sin_rule],
         None
       )
 
     return utils.apply_chain_rule(self, sin_rule, derivative)
-    
+
+  def simplify(self):
+    return SinExpression(self.arg.simplify())

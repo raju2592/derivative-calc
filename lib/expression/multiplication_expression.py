@@ -4,6 +4,7 @@ import lib.derivative.derivative_utils as utils
 import lib.expression.derivative_expression as derivexpr
 import lib.expression.addition_expression as addexpr
 import lib.expression.derivative_expression as derivexpr
+import lib.expression.constant_expression as constexpr
 
 class MultiplicationExpression(BinaryExpression):
   def __init__(self, left_arg, right_arg):
@@ -53,3 +54,27 @@ class MultiplicationExpression(BinaryExpression):
       [multiplication_rule],
       [left_derivative, right_derivative],
     )
+  
+  def simplify(self):
+    left_arg = self.left_arg.simplify()
+    right_arg = self.right_arg.simplify()
+
+    left_val = None
+    right_val = None
+
+    if isinstance(left_arg, constexpr.ConstantExpression) and not left_arg.is_e():
+      left_val = left_arg.get_value()
+    
+    if isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e():
+      right_val = right_arg.get_value()
+  
+    if left_val == 0 or right_val == 0:
+      return constexpr.ConstantExpression("0")
+    
+    if left_val is not None and right_val is not None:
+      return constexpr.ConstantExpression(str(left_val * right_val))
+
+    if left_val == 1: return right_arg
+    if right_val == 1: return left_arg
+
+    return MultiplicationExpression(left_arg, right_arg)

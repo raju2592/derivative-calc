@@ -2,6 +2,7 @@ from .binary_expression import BinaryExpression
 from ..derivative.derivative import Derivative
 import lib.derivative.derivative_utils as utils
 import lib.expression.derivative_expression as derivexpr
+import lib.expression.constant_expression as constexpr
 
 class AdditionExpression(BinaryExpression):
   def __init__(self, left_arg, right_arg):
@@ -28,7 +29,6 @@ class AdditionExpression(BinaryExpression):
   def to_asciimath(self):
     left_str = self.left_arg.to_asciimath()
     right_str = self.right_arg.to_asciimath()
-    print(left_str, self.operator, right_str, self.right_arg.precedence, self.precedence)
     if self.left_arg.precedence >= self.precedence:
       left_str = "(" + left_str + ")"
     if (self.right_arg.precedence >= self.precedence
@@ -37,3 +37,17 @@ class AdditionExpression(BinaryExpression):
     elif right_str[0] == "-":
       right_str = "(" + right_str + ")"
     return left_str + self.operator + right_str
+
+  def simplify(self):
+    left_arg = self.left_arg.simplify()
+    right_arg = self.right_arg.simplify()
+
+    if (isinstance(left_arg, constexpr.ConstantExpression) and not left_arg.is_e()
+      and isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e()):
+      left_val = left_arg.get_value()
+      right_val = right_arg.get_value()
+
+      val = left_val + right_val
+      return constexpr.ConstantExpression(str(val))
+
+    return AdditionExpression(left_arg, right_arg)

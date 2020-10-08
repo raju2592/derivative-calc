@@ -13,7 +13,6 @@ class BinaryExpression(Expression):
   def to_asciimath(self):
     left_str = self.left_arg.to_asciimath()
     right_str = self.right_arg.to_asciimath()
-    print(left_str, self.operator, right_str, self.right_arg.precedence, self.precedence)
     if self.left_arg.precedence >= self.precedence:
       left_str = "(" + left_str + ")"
     if (self.right_arg.precedence >= self.precedence

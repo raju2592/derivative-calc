@@ -24,9 +24,12 @@ class SqrtExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [sqrt_rule],
         None
       )
     
     return utils.apply_chain_rule(self, sqrt_rule, derivative)
+
+  def simplify(self):
+    return SqrtExpression(self.arg.simplify())

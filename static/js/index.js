@@ -29,6 +29,7 @@ function handleInput(inputFunction) {
         },
         error: function(){
             alert('Something Went Wrong!');
+            $('#function').removeAttr('disabled');
         },
     });
 }

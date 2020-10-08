@@ -5,7 +5,7 @@ from lib.expression.constant_expression import ConstantExpression
 def test_addition_derivative():
   expr = AdditionExpression(VariableExpression(), VariableExpression())
   derivative = expr.get_derivative()
-  assert derivative.result == AdditionExpression(
+  assert derivative.unsimplified_result == AdditionExpression(
     ConstantExpression("1"), ConstantExpression("1")
   )
 

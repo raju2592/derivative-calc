@@ -20,9 +20,12 @@ class LnExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [ln_rule],
         None
       )
     
     return utils.apply_chain_rule(self, ln_rule, derivative)
+
+  def simplify(self):
+    return LnExpression(self.arg.simplify())

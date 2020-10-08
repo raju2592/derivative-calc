@@ -16,8 +16,17 @@ class ConstantExpression(Expression):
   def is_e(self):
     return self.value == "e"
 
+  def is_int(self):
+    try: 
+      int(self.value)
+      return True
+    except ValueError:
+      return False
+
   def get_value(self):
-    pass
+    if self.is_e(): return 2.71828
+    if self.is_int: return int(self.value)
+    return float(self.value)
   
   def to_asciimath(self):
     return self.value

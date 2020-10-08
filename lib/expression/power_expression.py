@@ -47,18 +47,20 @@ class PowerExpression(BinaryExpression):
     derivative = None
     rule = None
 
+    rule_application = None
     if isinstance(self.left_arg, constexpr.ConstantExpression) and self.left_arg.is_e():
       derivative = self
       rule = "d/dx e^x = e^x"
     else:
       derivative = multiexpr.MultiplicationExpression(self, lnexpr.LnExpression(self.left_arg))
       rule = "d/dx a^x = a^x * ln(a)"
+      rule_application = derivative
 
     if self.right_arg == varexpr.VariableExpression():
       return Derivative(
         self,
         derivative,
-        derivative,
+        rule_application,
         [rule],
         None
       )
@@ -114,3 +116,13 @@ class PowerExpression(BinaryExpression):
       left_str = "(" + left_str + ")"
     right_str = "(" + self.right_arg.to_asciimath() + ")"
     return left_str + self.operator + right_str
+
+  def simplify(self):
+    left_arg = self.left_arg.simplify()
+    right_arg = self.right_arg.simplify()
+    
+    if isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e():
+      right_val = right_arg.get_value()
+      if (right_val == 0): return constexpr.ConstantExpression("1")
+      
+    return PowerExpression(left_arg, right_arg)

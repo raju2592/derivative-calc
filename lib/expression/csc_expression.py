@@ -27,9 +27,12 @@ class CscExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [csc_rule],
         None
       )
     
     return utils.apply_chain_rule(self, csc_rule, derivative)
+
+  def simplify(self):
+    return CscExpression(self.arg.simplify())

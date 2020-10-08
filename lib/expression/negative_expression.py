@@ -2,6 +2,7 @@ from .unary_expression import UnaryExpression
 from ..derivative.derivative import Derivative
 import lib.derivative.derivative_utils as utils
 import lib.expression.derivative_expression as derivexpr
+import lib.expression.constant_expression as constexpr
 
 class NegativeExpression(UnaryExpression):
   def __init__(self, arg):
@@ -21,3 +22,13 @@ class NegativeExpression(UnaryExpression):
       [neg_rule],
       [child_derivative]
     )
+
+  def simplify(self):
+    arg = self.arg.simplify()
+
+    if isinstance(arg, constexpr.ConstantExpression) and not arg.is_e():
+      val = arg.get_value()
+      if val == 0: return constexpr.ConstantExpression("0")
+      return constexpr.ConstantExpression(str(-1 * val))
+    
+    return NegativeExpression(arg)

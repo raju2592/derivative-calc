@@ -28,23 +28,23 @@ def get_story(derivative):
   
   story = []
   applied_rules = derivative.applied_rules
-  story.append(starting_text + add_quote(applied_rules[0]))
+  story.append(starting_text + add_quote(applied_rules[0]) + ".")
 
   if len(applied_rules) > 1:
-    story.append(more_starting_text + add_quote(applied_rules[1]))
+    story.append(more_starting_text + add_quote(applied_rules[1]) + ".")
 
   derivative_expression = DerivativeExpression(derivative.arg)
   rule_application = derivative.rule_application
 
-
   answer = add_quote(derivative_expression.to_asciimath() + " = " + derivative.result.to_asciimath()) + "."
 
   if derivative.child_derivatives is not None:
-    story.append("So, " + 
-      add_quote(derivative_expression.to_asciimath() + " = " 
-        + rule_application.to_asciimath()
+    if rule_application is not None:
+      story.append("So, " + 
+        add_quote(derivative_expression.to_asciimath() + " = " 
+          + rule_application.to_asciimath()
+        ) + "."
       )
-    )
     child_derivatives = derivative.child_derivatives
     if (len(child_derivatives) == 2 
       and child_derivatives[0].arg == child_derivatives[1].arg):
@@ -56,7 +56,7 @@ def get_story(derivative):
     ending_texts = []
     if len(derivative.applied_rules) == 2:
       ending_texts = [
-        "So, by the rules, " + add_quote(derivative.applied_rules[0]) + ","
+        "So, by the rules " + add_quote(derivative.applied_rules[0]) + ","
         + " and " + add_quote(derivative.applied_rules[1]) + ","        
       ]
     else:
@@ -64,8 +64,21 @@ def get_story(derivative):
         "So, by the rule, " + add_quote(derivative.applied_rules[0]) + ","
       ]
 
-    ending_texts.append(answer)
+    final_text = answer
+    if derivative.unsimplified_result != derivative.result:
+      final_text = add_quote(derivative_expression.to_asciimath() + " = " +
+        derivative.unsimplified_result.to_asciimath() + " = " + derivative.result.to_asciimath()) + "."
+
+    ending_texts.append(final_text)
     story.extend(ending_texts)
+
+  else:
+    if rule_application is not None:
+      final_text = "So, " + answer
+      if derivative.unsimplified_result != derivative.result:
+        final_text = "So, " + add_quote(derivative_expression.to_asciimath() + " = " +
+          derivative.unsimplified_result.to_asciimath() + " = " + derivative.result.to_asciimath()) + "."
+      story.append(final_text)
 
   return Result(True, answer, story)
   

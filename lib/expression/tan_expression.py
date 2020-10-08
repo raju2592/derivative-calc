@@ -24,9 +24,12 @@ class TanExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [tan_rule],
         None
       )
     
     return utils.apply_chain_rule(self, tan_rule, derivative)
+
+  def simplify(self):
+    return TanExpression(self.arg.simplify())

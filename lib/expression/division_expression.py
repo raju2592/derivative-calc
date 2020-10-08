@@ -69,3 +69,27 @@ class DivisionExpression(BinaryExpression):
       [rule],
       [left_derivative, right_derivative],
     )
+  
+  def simplify(self):
+    left_arg = self.left_arg.simplify()
+    right_arg = self.right_arg.simplify()
+
+    left_val = None
+    right_val = None
+
+    if isinstance(left_arg, constexpr.ConstantExpression) and not left_arg.is_e():
+      left_val = left_arg.get_value()
+    
+    if isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e():
+      right_val = right_arg.get_value()
+
+    if left_val == 0:
+      return constexpr.ConstantExpression("0")
+    
+    if (left_val is not None and right_val is not None
+      and right_val != 0 and left_val % right_val == 0):
+      return constexpr.ConstantExpression(str(left_val // right_val))
+    
+    if right_val == 1: return left_arg
+    
+    return DivisionExpression(left_arg, right_arg)

@@ -27,9 +27,12 @@ class CotExpression(FunctionExpression):
       return Derivative(
         self,
         derivative,
-        derivative,
+        None,
         [cot_rule],
         None
       )
     
     return utils.apply_chain_rule(self, cot_rule, derivative)
+
+  def simplify(self):
+    return CotExpression(self.arg.simplify())

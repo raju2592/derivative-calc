@@ -18,7 +18,10 @@ class ConstantExpression(Expression):
 
   def get_value(self):
     pass
-
+  
+  def to_asciimath(self):
+    return self.value
+  
   def __eq__(self, value):
     return (isinstance(value, ConstantExpression)
       and value.value == self.value)

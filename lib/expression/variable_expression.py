@@ -19,6 +19,8 @@ class VariableExpression(Expression):
       None
     )
 
+  def to_asciimath(self):
+    return "x"
 
   def __eq__(self, value):
     return isinstance(value, VariableExpression)

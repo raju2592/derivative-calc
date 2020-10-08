@@ -22,3 +22,12 @@ def test_cos_derivative():
     AdditionExpression(ConstantExpression("1"), ConstantExpression("1"))
   )
 
+
+def test_to_asciimath():
+  expr = CosExpression(VariableExpression())
+  math_str = expr.to_asciimath()
+  assert math_str == "cos(x)"
+
+  expr = CosExpression(ConstantExpression("90"))
+  math_str = expr.to_asciimath()
+  assert math_str == "cos(90)"

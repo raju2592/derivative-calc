@@ -9,5 +9,8 @@ class FunctionExpression(Expression):
   def is_constant(self):
     return self.arg.is_constant()
 
+  def to_asciimath(self):
+    return self.function + "(" + self.arg.to_asciimath() + ")"
+
   def __eq__(self, value):
     return type(self) is type(value) and value.arg == self.arg

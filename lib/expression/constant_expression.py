@@ -1,5 +1,6 @@
 from ..derivative.derivative import Derivative
 from .expression import Expression
+import lib.derivative.derivative_utils as utils
 
 class ConstantExpression(Expression):
   def __init__(self, value):
@@ -10,7 +11,7 @@ class ConstantExpression(Expression):
     return True
 
   def get_derivative(self):
-    pass
+    return utils.constant_derivative(self)
 
   def is_e(self):
     return self.value == "e"

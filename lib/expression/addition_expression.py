@@ -1,14 +1,26 @@
 from .binary_expression import BinaryExpression
-from .variable_expression import VariableExpression
 from ..derivative.derivative import Derivative
+import lib.derivative.derivative_utils as utils
+import lib.expression.derivative_expression as derivexpr
 
 class AdditionExpression(BinaryExpression):
   def __init__(self, left_arg, right_arg):
     super().__init__(left_arg, right_arg, "+", precedence=4)
 
   def get_derivative(self):
-    pass
+    if self.is_constant(): return utils.constant_derivative(self)
 
+    left_derivative = self.left_arg.get_derivative()
+    right_derivative = self.right_arg.get_derivative()
 
-  def get_value(self):
-    pass
+    rule_application = AdditionExpression(
+      derivexpr.DerivativeExpression(self.left_arg),
+      derivexpr.DerivativeExpression(self.right_arg)
+    )
+
+    applied_rules = ["d/dx (f(x) + g(x)) = d/dx f(x) + d/dx g(x)"]
+
+    result = AdditionExpression(left_derivative.result, right_derivative.result)
+    child_derivatives = [left_derivative, right_derivative]
+  
+    return Derivative(self, result, rule_application, applied_rules, child_derivatives)

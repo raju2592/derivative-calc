@@ -15,3 +15,4 @@ from .sec_expression import SecExpression
 from .csc_expression import CscExpression
 from .ln_expression import LnExpression
 from .sqrt_expression import SqrtExpression
+from .derivative_expression import DerivativeExpression

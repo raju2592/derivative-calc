@@ -7,7 +7,7 @@ import lib.expression.variable_expression as varexpr
 import lib.expression.constant_expression as constexpr
 import lib.expression.power_expression as powexpr
 import lib.expression.multiplication_expression as multiexpr
-import lib.expression.derivative_expression as divexpr
+import lib.expression.division_expression as divexpr
 import lib.expression.derivative_expression as derivexpr
 import lib.expression.ln_expression as lnexpr
 import lib.expression.negative_expression as negexpr
@@ -109,12 +109,8 @@ class PowerExpression(BinaryExpression):
     )
   
   def to_asciimath(self):
-    if (isinstance(self.right_arg, negexpr.NegativeExpression) 
-      or isinstance(self.right_arg, PowerExpression)):
-      right_str = "(" + self.right_arg.to_asciimath() + ")"
-      left_str = self.left_arg.to_asciimath()
-      if self.left_arg.precedence > self.precedence:
-        left_str = "(" + left_str + ")"
-      return left_str + self.operator + right_str
-
-    return super().to_asciimath()
+    left_str = self.left_arg.to_asciimath()
+    if self.left_arg.precedence >= self.precedence:
+      left_str = "(" + left_str + ")"
+    right_str = "(" + self.right_arg.to_asciimath() + ")"
+    return left_str + self.operator + right_str

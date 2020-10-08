@@ -9,3 +9,10 @@ def test_addition_derivative():
     ConstantExpression("1"), ConstantExpression("1")
   )
 
+
+def test_addition_asciimath():
+  expr = AdditionExpression(VariableExpression(),
+    AdditionExpression(VariableExpression(), VariableExpression())
+  )
+  math_str = expr.to_asciimath()
+  assert math_str == "x+(x+x)"

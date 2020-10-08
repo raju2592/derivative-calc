@@ -36,15 +36,15 @@ def get_story(derivative):
   derivative_expression = DerivativeExpression(derivative.arg)
   rule_application = derivative.rule_application
 
-  story.append("So, " + 
-    add_quote(derivative_expression.to_asciimath() + " = " 
-      + rule_application.to_asciimath()
-    )
-  )
 
   answer = add_quote(derivative_expression.to_asciimath() + " = " + derivative.result.to_asciimath()) + "."
 
   if derivative.child_derivatives is not None:
+    story.append("So, " + 
+      add_quote(derivative_expression.to_asciimath() + " = " 
+        + rule_application.to_asciimath()
+      )
+    )
     child_derivatives = derivative.child_derivatives
     if (len(child_derivatives) == 2 
       and child_derivatives[0].arg == child_derivatives[1].arg):

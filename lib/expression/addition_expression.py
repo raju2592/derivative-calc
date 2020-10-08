@@ -5,7 +5,7 @@ import lib.expression.derivative_expression as derivexpr
 
 class AdditionExpression(BinaryExpression):
   def __init__(self, left_arg, right_arg):
-    super().__init__(left_arg, right_arg, "+", precedence=4)
+    super().__init__(left_arg, right_arg, "+", precedence=5)
 
   def get_derivative(self):
     if self.is_constant(): return utils.constant_derivative(self)
@@ -24,3 +24,16 @@ class AdditionExpression(BinaryExpression):
     child_derivatives = [left_derivative, right_derivative]
   
     return Derivative(self, result, rule_application, applied_rules, child_derivatives)
+  
+  def to_asciimath(self):
+    left_str = self.left_arg.to_asciimath()
+    right_str = self.right_arg.to_asciimath()
+    print(left_str, self.operator, right_str, self.right_arg.precedence, self.precedence)
+    if self.left_arg.precedence >= self.precedence:
+      left_str = "(" + left_str + ")"
+    if (self.right_arg.precedence >= self.precedence
+      and isinstance(self.right_arg, BinaryExpression)):
+      right_str = "(" + right_str + ")"
+    elif right_str[0] == "-":
+      right_str = "(" + right_str + ")"
+    return left_str + self.operator + right_str

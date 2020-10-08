@@ -6,6 +6,7 @@ class DerivativeExpression(UnaryExpression):
     super().__init__(arg, "d/dx", 4)
 
   def to_asciimath(self):
-    if isinstance(self.arg, negexpr.NegativeExpression):
+    arg_str = self.arg.to_asciimath()
+    if arg_str[0] == "-":
       return self.operator + "(" + self.arg.to_asciimath() + ")"
     return super().to_asciimath()

@@ -16,7 +16,7 @@ class SqrtExpression(FunctionExpression):
     sqrt_rule = "d/dx sqrt(x) = 1/(2*sqrt(x))"
 
     derivative = divexpr.DivisionExpression(
-      constexpr.ConstantExpression(1),
+      constexpr.ConstantExpression("1"),
       multiexpr.MultiplicationExpression(constexpr.ConstantExpression("2"), self)
     )
 

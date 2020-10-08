@@ -1,6 +1,7 @@
 # derivative-calculator
 live app: [derivative-calculator](http://derivative-calc.herokuapp.com/)
 
+![Screenshot](screenshot.png)
 Calculates the symbolic derivative of the given function. It parses the expression first using recursive descent parsing
 and then recusrsively calculates the derivative. It uses `MathJax` to render mathematical expressions written in `AsciiMath`
 

@@ -41,6 +41,9 @@ def get_story(derivative):
       + rule_application.to_asciimath()
     )
   )
+
+  answer = add_quote(derivative_expression.to_asciimath() + " = " + derivative.result.to_asciimath()) + "."
+
   if derivative.child_derivatives is not None:
     child_derivatives = derivative.child_derivatives
     if (len(child_derivatives) == 2 
@@ -54,18 +57,17 @@ def get_story(derivative):
     if len(derivative.applied_rules) == 2:
       ending_texts = [
         "So, by the rules, " + add_quote(derivative.applied_rules[0]) + ","
-        "and" + add_quote(derivative.applied_rules[1]) + ","        
+        + " and " + add_quote(derivative.applied_rules[1]) + ","        
       ]
     else:
       ending_texts = [
-        "So, by the rules, " + add_quote(derivative.applied_rules[0]) + ","
+        "So, by the rule, " + add_quote(derivative.applied_rules[0]) + ","
       ]
-    ending_texts.append(
-      add_quote(derivative_expression.to_asciimath() + " = " + derivative.result.to_asciimath()) + "."
-    )
+
+    ending_texts.append(answer)
     story.extend(ending_texts)
 
-  return Result(True, derivative.result.to_asciimath(), story)
+  return Result(True, answer, story)
   
 def differentiate(str):
   tokenizationResult = tokenize(str)

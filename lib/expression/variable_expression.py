@@ -14,7 +14,7 @@ class VariableExpression(Expression):
     return Derivative(
       self,
       constexpr.ConstantExpression("1"),
-      constexpr.ConstantExpression("1"),
+      None,
       ["d/dx x = 1"],
       None
     )

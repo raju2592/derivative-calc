@@ -3,6 +3,7 @@ from ..derivative.derivative import Derivative
 import lib.derivative.derivative_utils as utils
 import lib.expression.derivative_expression as derivexpr
 import lib.expression.constant_expression as constexpr
+import lib.expression.negative_expression as negexpr
 
 class SubtractionExpression(BinaryExpression):
   def __init__(self, left_arg, right_arg):
@@ -31,12 +32,19 @@ class SubtractionExpression(BinaryExpression):
     left_arg = self.left_arg.simplify()
     right_arg = self.right_arg.simplify()
 
-    if (isinstance(left_arg, constexpr.ConstantExpression) and not left_arg.is_e()
-      and isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e()):
-      left_val = left_arg.get_value()
-      right_val = right_arg.get_value()
+    left_val = None
+    right_val = None
 
-      val = left_val - right_val
-      return constexpr.ConstantExpression(str(val))
+    if isinstance(left_arg, constexpr.ConstantExpression) and not left_arg.is_e():
+      left_val = left_arg.get_value()
+    
+    if isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e():
+      right_val = right_arg.get_value()
+    
+    if left_val is not None and right_val is not None:
+      return constexpr.ConstantExpression(str(left_val - right_val))
+
+    if left_val == 0: return negexpr.NegativeExpression(right_arg)
+    if right_val == 0: return left_arg
 
     return SubtractionExpression(left_arg, right_arg)

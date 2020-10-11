@@ -52,4 +52,5 @@ def parse_symbol(tokens, symbol, pos):
 def get_expression(tokens):
   match = parse_symbol(tokens, start_symbol, 0)
   if match is None: return None
+  if match.end < len(tokens): return None
   return match.expression

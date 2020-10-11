@@ -47,4 +47,5 @@ class SubtractionExpression(BinaryExpression):
     if left_val == 0: return negexpr.NegativeExpression(right_arg)
     if right_val == 0: return left_arg
 
+    if left_arg == right_arg: return constexpr.ConstantExpression("0")
     return SubtractionExpression(left_arg, right_arg)

@@ -31,4 +31,5 @@ class NegativeExpression(UnaryExpression):
       if val == 0: return constexpr.ConstantExpression("0")
       return constexpr.ConstantExpression(str(-1 * val))
     
+    if isinstance(arg, NegativeExpression): return arg.arg
     return NegativeExpression(arg)

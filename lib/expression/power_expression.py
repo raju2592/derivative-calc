@@ -124,5 +124,5 @@ class PowerExpression(BinaryExpression):
     if isinstance(right_arg, constexpr.ConstantExpression) and not right_arg.is_e():
       right_val = right_arg.get_value()
       if (right_val == 0): return constexpr.ConstantExpression("1")
-      
+      if (right_val == 1): return left_arg
     return PowerExpression(left_arg, right_arg)

@@ -92,4 +92,5 @@ class DivisionExpression(BinaryExpression):
     
     if right_val == 1: return left_arg
     
+    if left_arg == right_arg: return constexpr.ConstantExpression("1")
     return DivisionExpression(left_arg, right_arg)

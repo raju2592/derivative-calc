@@ -7,9 +7,9 @@ and then recusrsively calculates the derivative. It uses `MathJax` to render mat
 
 The following functions and operators are currently supported
 functions: `ln`, `sqrt`, `sin`, `cos`, `tan`, `cot`, `sec`, `cosec`. operator: `unary and binary - and +`, `^ (exponential)`, 
-`* (multiplication)`, `\ (division)` 
+`* (multiplication)`, `/ (division)` 
 
-All arguments to functions should be enclosed in parentheses. for example : `sin(x+1), sqrt(x^2)`
+All arguments to functions should be enclosed in parenthesis. for example : `sin(x+1), sqrt(x^2)`
 
 ## Operator Precedance
 0. `ln`, `sqrt`, `sin`, `cos`, `tan`, `cot`, `sec`, `cosec`
@@ -28,4 +28,14 @@ So, `d/dx a*b` means  `d/dx (a*b)`, but `d/dx a + b` means `(d/dx a) + b`. also 
 
 So, `a*b/c/d` means `((a*b)/c)/d`, and `a^b^c` means `a^(b^c)`.
 
-In case of power of trigonometric functions, you should provide input like `(sin(x))^3`, `sin^3(x)` will not work.
+In case of power of trigonometric functions, input should be provided like `(sin(x))^3`, `sin^3(x)` will not work.
+
+## How to Run
+* Install `python` and `pip` if not already installed.
+* Install `pipenv` if not already installed by `pip install pipenv`
+* git clone the repo
+* `cd` to the project folder
+* run `pipenv --three` to create a `python3` virtual environment
+* run `pipenv install` to install project dependencies
+* run `pipenv shell` to activate virtual environment.
+* run `python app.py` to run the development server. the server will be accessible now at `http://localhost:5000`

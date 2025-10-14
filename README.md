@@ -1,5 +1,5 @@
 # derivative-calculator
-live app: [derivative-calculator](http://derivative-calc.herokuapp.com/)
+live app: [derivative-calculator](https://derivative-calculator-py.vercel.app/)
 
 ![Screenshot](screenshot.png)
 Calculates the symbolic derivative of the given function. It parses the expression first using recursive descent parsing
